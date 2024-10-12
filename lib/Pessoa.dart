@@ -21,6 +21,7 @@ class Pessoa {
 
   factory Pessoa.fromMap(Map<String, dynamic> map) {
     return Pessoa(
+      id: map['id'],
       nome: map['nome'],
       cpf: map['cpf'],
       creditcard: map['creditcard'],

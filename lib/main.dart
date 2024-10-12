@@ -45,11 +45,10 @@ class _Pagina1State extends State<Pagina1> {
         cpf: _cpfController.text,
         creditcard: _cartaoController.text,
       ));
-
     } else {
       //atualizar existente
       _pessoaAtual!.nome = _nomeController.text;
-      _pessoaAtual!.cpf = _nomeController.text;
+      _pessoaAtual!.cpf = _cpfController.text;
       _pessoaAtual!.creditcard = _cartaoController.text;
       await _pessoaDAO.updatePessoa(_pessoaAtual!);
     }
@@ -57,7 +56,7 @@ class _Pagina1State extends State<Pagina1> {
     _cpfController.clear();
     _cartaoController.clear();
     setState(() {
-      _pessoaAtual = null;  
+      _pessoaAtual = null;
     });
     _loadPessoas();
   }
@@ -78,12 +77,7 @@ class _Pagina1State extends State<Pagina1> {
   }
 
   void _deletePessoa(int index) async {
-    await _pessoaDAO.deletePessoa(Pessoa(
-      id: index,
-      nome: '',
-      cpf: '',
-      creditcard: '',
-    ));
+    await _pessoaDAO.deletePessoa(index);
     _loadPessoas();
   }
 
@@ -134,7 +128,8 @@ class _Pagina1State extends State<Pagina1> {
               itemBuilder: (context, index) {
                 final Pessoa pessoa = _listaPessoas[index];
                 return ListTile(
-                  title: Text('Nome: ${pessoa.nome} - CPF: ${pessoa.cpf}'),
+                  title: Text(
+                      'ID: ${pessoa.id} - Nome: ${pessoa.nome} - CPF: ${pessoa.cpf}'),
                   trailing: IconButton(
                     onPressed: () {
                       _deletePessoa(pessoa.id!);
